@@ -69,7 +69,8 @@ public class WindowMenuUpdateListener implements ListChangeListener<Stage> {
 	private void removeWindowMenuItem(Stage stage, Menu menu) {
 		MenuItem menuItem = createdMenuItems.get(stage);
 		if (menuItem != null) {
-			createdMenuItems.remove(stage);
+      createdMenuItems.remove(stage);
+			menuItem.setOnAction(null);
 			menu.getItems().remove(menuItem);
     }
 	}
