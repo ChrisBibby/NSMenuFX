@@ -1,8 +1,9 @@
 package de.jangassen.dialogs.about;
 
-import javafx.fxml.FXMLLoader;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -14,11 +15,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Collection;
-import java.util.Collections;
-
 public class AboutStageBuilder {
 
   public static final String DEFAULT_APP_ICON =
@@ -26,14 +22,19 @@ public class AboutStageBuilder {
   public static final int DEFAULT_ICON_SIZE = 120;
 
   private final Stage stage;
+  private final AboutController controller;
   private Label version;
   private Label name;
   private Label copyright;
   private Node credits;
   private ImageView image;
 
-  private AboutStageBuilder(Stage stage) {
+
+  private AboutStageBuilder(
+      final Stage stage,
+      final AboutController controller) {
     this.stage = stage;
+    this.controller = controller;
   }
 
   public Stage build() {
@@ -46,11 +47,7 @@ public class AboutStageBuilder {
   }
 
   private void prepareStage() throws IOException {
-    URL resource = AboutStageBuilder.class.getClassLoader().getResource("about.fxml");
-    FXMLLoader loader = new FXMLLoader(resource);
-    Parent root = loader.load();
-
-    AboutController controller = loader.getController();
+    final BorderPane root = new BorderPane();
 
     if (image != null) {
       controller.getContent().getChildren().add(image);
@@ -160,7 +157,8 @@ public class AboutStageBuilder {
 
   public static AboutStageBuilder start(String title) {
     final Stage aboutStage = new Stage();
+    final AboutController controller = new AboutController();
     aboutStage.setResizable(false);
-    return new AboutStageBuilder(aboutStage).withTitle(title).withSize(300, 300);
+    return new AboutStageBuilder(aboutStage, controller).withTitle(title).withSize(300, 300);
   }
 }
