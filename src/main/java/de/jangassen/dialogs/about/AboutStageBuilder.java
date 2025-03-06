@@ -82,8 +82,8 @@ public class AboutStageBuilder {
     return this;
   }
 
-  public AboutStageBuilder withSize(int with, int height) {
-    stage.setMinWidth(with);
+  public AboutStageBuilder withSize(int width, int height) {
+    stage.setMinWidth(width);
     stage.setMaxWidth(height);
 
     return this;
